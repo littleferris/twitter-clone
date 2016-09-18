@@ -1,14 +1,27 @@
 $(document).ready(function() {
 
-  $("#tweet-content").on('click', function(){
-    $(".tweet-compose").animate({
-      height: "5em"
-    }, 10 );
+  $('.tweet').on('click', function () {
+    $('.stats').hide();
   });
 
+  $('.tweet').on('click', function () {
+    var $stats = $(this).find('.stats');
+    $stats.show();
+  });
 
-$('#tweet-content').on('click', function () {
-  $('#tweet-controls').show();
+  $("#tweet-content").on('click', function(){
+    var $tweetComp = $(this).find(".tweet-compose");
+    $tweetComp.animate({
+      height: "5em"
+    }, 10 );
+    $('#tweet-controls').show();
+  });
+
+$('#main').on('click', function () {
+  $(".tweet-compose").animate({
+    height: "2.5em"
+  }, 10 );
+  $('#tweet-controls').hide();
 });
 
 
@@ -32,25 +45,33 @@ $('textarea').keyup(function() {
   }
   else { $('.button').prop('disabled', false);
   }
+
+  if($(this).val().length < 1 ) {
+    $('.button').prop('disabled', true);
+  }
+  else { $('.button').prop('disabled', false);
+  }
 });
 
 
 
 $("#tweet-submit").on('click', function(){
+  var $newTweet = $('.tweet').first().clone(true, true);
 
-  var $tweet = $('.tweet').first().clone();
   var enteredText = $('textarea').first().val();
 
-  $tweet.find('.avatar').attr('src', 'img/alagoon.jpg');
-  $tweet.find('.fullname').text('Your Name Here');
-  $tweet.find('.username').text('@myNameHere');
-  $tweet.find('.tweet-text').text(enteredText);
-  $('#stream').first().prepend($tweet);
+  $newTweet.find('.avatar').attr('src', 'img/alagoon.jpg');
+  $newTweet.find('.fullname').text('Mark Ferris');
+  $newTweet.find('.username').text('@littleferris');
+  $newTweet.find('.tweet-text').text(enteredText);
+  $newTweet.find('.num-favorites').text('0');
+  $newTweet.find('.num-retweets').text('0');
+  $('#stream').first().prepend($newTweet);
   $('textarea').val('');
 });
 
-
-
+var now = new Date();
+jQuery("time.timeago").timeago();
 
 
 
